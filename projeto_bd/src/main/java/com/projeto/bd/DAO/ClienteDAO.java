@@ -11,18 +11,18 @@ public class ClienteDAO extends ConnectionDAO{
     private boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertCliente(Cliente Cliente) {
+    public boolean insertCliente(Cliente cliente) {
 
         connectToDB();
 
         String sql = "INSERT INTO cliente (nome, email, telefone, endereco, data_de_nascimento) values(?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1,Cliente.getNome());
-            pst.setString(2, Cliente.getEmail());
-            pst.setString(3, Cliente.getTelefone());
-            pst.setString(4, Cliente.getEndereco());
-            pst.setString(5, Cliente.getData_de_nascimento());
+            pst.setString(1, cliente.getNome());
+            pst.setString(2, cliente.getEmail());
+            pst.setString(3, cliente.getTelefone());
+            pst.setString(4, cliente.getEndereco());
+            pst.setString(5, cliente.getData_de_nascimento());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -92,7 +92,7 @@ public class ClienteDAO extends ConnectionDAO{
 
     //SELECT
     public ArrayList<Cliente> selectCliente() {
-        ArrayList<Cliente> Clientes = new ArrayList<>();
+        ArrayList<Cliente> clientes = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM cliente";
 
@@ -104,16 +104,16 @@ public class ClienteDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Cliente ClienteAux = new Cliente(rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("endereco"),rs.getString("data_de_nascimento"));
+                Cliente clienteAux = new Cliente(rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getString("endereco"),rs.getString("data_de_nascimento"));
 
-                System.out.println("nome = " + ClienteAux.getNome());
-                System.out.println("email = " + ClienteAux.getEmail());
-                System.out.println("telefone = " + ClienteAux.getTelefone());
-                System.out.println("endereco = " + ClienteAux.getEndereco());
-                System.out.println("data de nascimento = " + ClienteAux.getData_de_nascimento());
+                System.out.println("nome = " + clienteAux.getNome());
+                System.out.println("email = " + clienteAux.getEmail());
+                System.out.println("telefone = " + clienteAux.getTelefone());
+                System.out.println("endereco = " + clienteAux.getEndereco());
+                System.out.println("data de nascimento = " + clienteAux.getData_de_nascimento());
                 System.out.println("--------------------------------");
 
-                Clientes.add(ClienteAux);
+                clientes.add(clienteAux);
             }
             sucesso = true;
         } catch (SQLException e) {
@@ -127,7 +127,7 @@ public class ClienteDAO extends ConnectionDAO{
                 System.out.println("Erro: " + e.getMessage());
             }
         }
-        return Clientes;
+        return clientes;
     }
 
 }
