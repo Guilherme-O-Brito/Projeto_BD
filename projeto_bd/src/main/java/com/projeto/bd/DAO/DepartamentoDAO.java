@@ -102,7 +102,7 @@ public class DepartamentoDAO extends ConnectionDAO{
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Chefes De Departamento: ");
+            System.out.println("Lista Departamentos: ");
 
             while (rs.next()) {
 

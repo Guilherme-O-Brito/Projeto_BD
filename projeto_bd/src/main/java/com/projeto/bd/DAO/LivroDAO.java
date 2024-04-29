@@ -3,27 +3,28 @@ package com.projeto.bd.DAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.projeto.bd.models.Funcionario;
+import com.projeto.bd.models.Livro;
 
-public class FuncionarioDAO extends ConnectionDAO {
+public class LivroDAO extends ConnectionDAO {
 
     //DAO - Data Access Object
     private boolean sucesso = false; //Para saber se funcionou
 
     //INSERT
-    public boolean insertFuncionario(Funcionario funcionario) {
+    public boolean insertLivro(Livro Livro) {
 
         connectToDB();
 
-        String sql = "INSERT INTO funcionario (nome, data_de_nascimento, cargo, matricula, email, telefone) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO livro (id, nome, autor, genero, assunto, edicao, estoque) values(?,?,?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, funcionario.getNome());
-            pst.setString(2, funcionario.getData_de_nascimento());
-            pst.setString(3, funcionario.getCargo());
-            pst.setInt(4, funcionario.getMatricula());
-            pst.setString(5, funcionario.getEmail());
-            pst.setString(6, funcionario.getTelefone());
+            pst.setInt(1, Livro.getId());
+            pst.setString(2, Livro.getNome());
+            pst.setString(3, Livro.getAutor());
+            pst.setString(4, Livro.getGenero());
+            pst.setString(5, Livro.getAssunto());
+            pst.setString(6, Livro.getEdicao());
+            pst.setInt(7, Livro.getEstoque());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -41,18 +42,18 @@ public class FuncionarioDAO extends ConnectionDAO {
     }
 
     //UPDATE
-    public boolean updateFuncionarioNome(String nome, String email, String cargo, int matricula, String telefone, String data_de_nascimento, String novoNome) {
+    public boolean updateLivroNome(int id, String nome, String autor, String genero, String assunto, String edicao, int estoque) {
         connectToDB();
-        String sql = "UPDATE funcionario SET nome=?, data_de_nascimento=?, cargo=?, matricula=?, email=?, telefone=?, where nome=?";
+        String sql = "UPDATE livro SET nome=?, autor=?, genero=?, assunto=?, edicao=?, estoque=?, where id=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, novoNome);
-            pst.setString(2, data_de_nascimento);
-            pst.setString(3, cargo);
-            pst.setInt(4, matricula);
-            pst.setString(5, email);
-            pst.setString(6, telefone);
-            pst.setString(7, nome);
+            pst.setString(1, nome);
+            pst.setString(2, autor);
+            pst.setString(3, genero);
+            pst.setString(4, assunto);
+            pst.setString(5, edicao);
+            pst.setInt(6, estoque);
+            pst.setInt(7, id);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -70,12 +71,12 @@ public class FuncionarioDAO extends ConnectionDAO {
     }
 
     //DELETE
-    public boolean deleteFuncionario(String nome) {
+    public boolean deleteLivro(int id) {
         connectToDB();
-        String sql = "DELETE FROM funcionario where nome=?";
+        String sql = "DELETE FROM livro where id=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, nome);
+            pst.setInt(1, id);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -93,30 +94,31 @@ public class FuncionarioDAO extends ConnectionDAO {
     }
 
     //SELECT
-    public ArrayList<Funcionario> selectFuncionario() {
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+    public ArrayList<Livro> selectLivro() {
+        ArrayList<Livro> livros = new ArrayList<>();
         connectToDB();
-        String sql = "SELECT * FROM funcionario";
+        String sql = "SELECT * FROM livro";
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Funcionarios: ");
+            System.out.println("Lista de Chefes De Departamento: ");
 
             while (rs.next()) {
 
-                Funcionario funcionarioAux = new Funcionario(rs.getString("nome"), rs.getString("data_de_nascimento"), rs.getString("cargo"), rs.getInt("matricula"), rs.getString("email"),rs.getString("telefone"));
+                Livro livroAux = new Livro(rs.getInt("id"), rs.getString("nome"), rs.getString("autor"), rs.getString("genero"), rs.getString("assunto"), rs.getString("edicao"),rs.getInt("estoque"));
 
-                System.out.println("nome = " + funcionarioAux.getNome());
-                System.out.println("data de nascimento = " + funcionarioAux.getData_de_nascimento());
-                System.out.println("cargo = " + funcionarioAux.getCargo());
-                System.out.println("matricula = " + funcionarioAux.getMatricula());
-                System.out.println("email = " + funcionarioAux.getEmail());
-                System.out.println("telefone = " + funcionarioAux.getTelefone());
+                System.out.println("id = " + livroAux.getId());
+                System.out.println("nome = " + livroAux.getNome());
+                System.out.println("autor = " + livroAux.getAutor());
+                System.out.println("genero = " + livroAux.getGenero());
+                System.out.println("assunto = " + livroAux.getAssunto());
+                System.out.println("edicao = " + livroAux.getEdicao());
+                System.out.println("Estoque = " + livroAux.getEstoque());
                 System.out.println("--------------------------------");
 
-                funcionarios.add(funcionarioAux);
+                livros.add(livroAux);
             }
             sucesso = true;
         } catch (SQLException e) {
@@ -130,7 +132,7 @@ public class FuncionarioDAO extends ConnectionDAO {
                 System.out.println("Erro: " + e.getMessage());
             }
         }
-        return funcionarios;
+        return livros;
     }
     
 }
