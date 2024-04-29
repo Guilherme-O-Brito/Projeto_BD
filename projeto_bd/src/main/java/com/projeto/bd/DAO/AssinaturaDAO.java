@@ -15,12 +15,12 @@ public class AssinaturaDAO extends ConnectionDAO{
 
         connectToDB();
 
-        String sql = "INSERT INTO assinatura (id, tema, livro_id) values(?,?,?)";
+        String sql = "INSERT INTO assinatura (id, tema) values(?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1,assinatura.getId());
             pst.setString(2, assinatura.getTema());
-            pst.setInt(3, assinatura.getLivro_id());
+            //pst.setInt(3, assinatura.getLivro_id());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -98,7 +98,7 @@ public class AssinaturaDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Assinatura assinaturaAux = new Assinatura(rs.getInt("id"), rs.getString("tema"), rs.getInt("livro_id"));
+                Assinatura assinaturaAux = new Assinatura(rs.getInt("id"), rs.getString("tema"), rs.getInt("livros_id"));
 
                 System.out.println("id = " + assinaturaAux.getId());
                 System.out.println("tema = " + assinaturaAux.getTema());
