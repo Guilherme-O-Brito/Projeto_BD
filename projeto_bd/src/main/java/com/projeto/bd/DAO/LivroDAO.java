@@ -15,7 +15,7 @@ public class LivroDAO extends ConnectionDAO {
 
         connectToDB();
 
-        String sql = "INSERT INTO livro (id, nome, autor, genero, assunto, edicao, estoque) values(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO livros (id, nome, autor, genero, assunto, edicao, estoque, editora_nome) values(?,?,?,?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, Livro.getId());
@@ -25,6 +25,7 @@ public class LivroDAO extends ConnectionDAO {
             pst.setString(5, Livro.getAssunto());
             pst.setString(6, Livro.getEdicao());
             pst.setInt(7, Livro.getEstoque());
+            pst.setString(8, Livro.getEditoraNome());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -42,9 +43,9 @@ public class LivroDAO extends ConnectionDAO {
     }
 
     //UPDATE
-    public boolean updateLivroNome(int id, String nome, String autor, String genero, String assunto, String edicao, int estoque) {
+    public boolean updateLivroNome(int id, String nome, String autor, String genero, String assunto, String edicao, int estoque, String editora_nome) {
         connectToDB();
-        String sql = "UPDATE livro SET nome=?, autor=?, genero=?, assunto=?, edicao=?, estoque=?, where id=?";
+        String sql = "UPDATE livros SET nome=?, autor=?, genero=?, assunto=?, edicao=?, estoque=?, editora_nome=? where id=?";
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, nome);
@@ -53,7 +54,8 @@ public class LivroDAO extends ConnectionDAO {
             pst.setString(4, assunto);
             pst.setString(5, edicao);
             pst.setInt(6, estoque);
-            pst.setInt(7, id);
+            pst.setString(7, editora_nome);
+            pst.setInt(8, id);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -73,7 +75,7 @@ public class LivroDAO extends ConnectionDAO {
     //DELETE
     public boolean deleteLivro(int id) {
         connectToDB();
-        String sql = "DELETE FROM livro where id=?";
+        String sql = "DELETE FROM livros where id=?";
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, id);
@@ -97,17 +99,17 @@ public class LivroDAO extends ConnectionDAO {
     public ArrayList<Livro> selectLivro() {
         ArrayList<Livro> livros = new ArrayList<>();
         connectToDB();
-        String sql = "SELECT * FROM livro";
+        String sql = "SELECT * FROM livros";
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Chefes De Departamento: ");
+            System.out.println("Lista de Livros: ");
 
             while (rs.next()) {
 
-                Livro livroAux = new Livro(rs.getInt("id"), rs.getString("nome"), rs.getString("autor"), rs.getString("genero"), rs.getString("assunto"), rs.getString("edicao"),rs.getInt("estoque"));
+                Livro livroAux = new Livro(rs.getInt("id"), rs.getString("nome"), rs.getString("autor"), rs.getString("genero"), rs.getString("assunto"), rs.getString("edicao"),rs.getInt("estoque"),rs.getString("editora_nome"));
 
                 System.out.println("id = " + livroAux.getId());
                 System.out.println("nome = " + livroAux.getNome());
@@ -116,6 +118,7 @@ public class LivroDAO extends ConnectionDAO {
                 System.out.println("assunto = " + livroAux.getAssunto());
                 System.out.println("edicao = " + livroAux.getEdicao());
                 System.out.println("Estoque = " + livroAux.getEstoque());
+                System.out.println("Editora = " + livroAux.getEditoraNome());
                 System.out.println("--------------------------------");
 
                 livros.add(livroAux);

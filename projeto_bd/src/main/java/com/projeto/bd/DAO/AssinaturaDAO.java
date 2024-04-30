@@ -20,7 +20,6 @@ public class AssinaturaDAO extends ConnectionDAO{
             pst = con.prepareStatement(sql);
             pst.setInt(1,assinatura.getId());
             pst.setString(2, assinatura.getTema());
-            //pst.setInt(3, assinatura.getLivro_id());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -98,11 +97,10 @@ public class AssinaturaDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Assinatura assinaturaAux = new Assinatura(rs.getInt("id"), rs.getString("tema"), rs.getInt("livros_id"));
+                Assinatura assinaturaAux = new Assinatura(rs.getInt("id"), rs.getString("tema"));
 
                 System.out.println("id = " + assinaturaAux.getId());
                 System.out.println("tema = " + assinaturaAux.getTema());
-                System.out.println("livro_id = " + assinaturaAux.getLivro_id());
                 System.out.println("--------------------------------");
 
                 assinaturas.add(assinaturaAux);

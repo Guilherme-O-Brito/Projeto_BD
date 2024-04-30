@@ -9,8 +9,9 @@ public class Livro {
     private String assunto;
     private String edicao;
     private int estoque;
+    private String editora_nome;
     
-    public Livro(int id, String nome, String autor, String genero, String assunto, String edicao, int estoque) {
+    public Livro(int id, String nome, String autor, String genero, String assunto, String edicao, int estoque, String editora_nome) {
         this.id = id;
         this.nome = nome;
         this.autor = autor;
@@ -18,6 +19,7 @@ public class Livro {
         this.assunto = assunto;
         this.edicao = edicao;
         this.estoque = estoque;
+        this.editora_nome = editora_nome;
     }
 
     public int getId() {
@@ -48,6 +50,8 @@ public class Livro {
         return estoque;
     }
 
-    
+    public String getEditoraNome(){
+        return editora_nome;
+    }
 
 }

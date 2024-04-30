@@ -6,12 +6,14 @@ public class ChefeDeDepartamento {
     private int matricula;
     private String email;
     private String telefone;
+    private String departamento_nome;
     
-    public ChefeDeDepartamento(String nome, int matricula, String email, String telefone) {
+    public ChefeDeDepartamento(String nome, int matricula, String email, String telefone, String departamento_nome) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
         this.telefone = telefone;
+        this.departamento_nome = departamento_nome;
     }
 
     public String getNome() {
@@ -28,6 +30,10 @@ public class ChefeDeDepartamento {
 
     public String getTelefone() {
         return telefone;
+    }
+
+    public String getDepartamentoNome(){
+        return departamento_nome;
     }
 
 }

@@ -15,7 +15,7 @@ public class FuncionarioDAO extends ConnectionDAO {
 
         connectToDB();
 
-        String sql = "INSERT INTO funcionario (nome, data_de_nascimento, cargo, matricula, email, telefone) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO funcionario (nome, data_de_nascimento, cargo, matricula, email, telefone, departamento_nome) values(?,?,?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, funcionario.getNome());
@@ -24,6 +24,7 @@ public class FuncionarioDAO extends ConnectionDAO {
             pst.setInt(4, funcionario.getMatricula());
             pst.setString(5, funcionario.getEmail());
             pst.setString(6, funcionario.getTelefone());
+            pst.setString(7, funcionario.getDepartamento_nome());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -41,17 +42,17 @@ public class FuncionarioDAO extends ConnectionDAO {
     }
 
     //UPDATE
-    public boolean updateFuncionarioNome(String nome, String email, String cargo, int matricula, String telefone, String data_de_nascimento, String novoNome) {
+    public boolean updateFuncionarioNome(String nome, String email, String cargo, int matricula, String telefone, String data_de_nascimento, String departamento_nome) {
         connectToDB();
-        String sql = "UPDATE funcionario SET nome=?, data_de_nascimento=?, cargo=?, matricula=?, email=?, telefone=?, where nome=?";
+        String sql = "UPDATE funcionario SET data_de_nascimento=?, cargo=?, matricula=?, email=?, telefone=?, departamento_nome=? where nome=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, novoNome);
-            pst.setString(2, data_de_nascimento);
-            pst.setString(3, cargo);
-            pst.setInt(4, matricula);
-            pst.setString(5, email);
-            pst.setString(6, telefone);
+            pst.setString(1, data_de_nascimento);
+            pst.setString(2, cargo);
+            pst.setInt(3, matricula);
+            pst.setString(4, email);
+            pst.setString(5, telefone);
+            pst.setString(6, departamento_nome);
             pst.setString(7, nome);
             pst.execute();
             sucesso = true;
@@ -106,7 +107,7 @@ public class FuncionarioDAO extends ConnectionDAO {
 
             while (rs.next()) {
 
-                Funcionario funcionarioAux = new Funcionario(rs.getString("nome"), rs.getString("data_de_nascimento"), rs.getString("cargo"), rs.getInt("matricula"), rs.getString("email"),rs.getString("telefone"));
+                Funcionario funcionarioAux = new Funcionario(rs.getString("nome"), rs.getString("data_de_nascimento"), rs.getString("cargo"), rs.getInt("matricula"), rs.getString("email"),rs.getString("telefone"),rs.getString("departamento_nome"));
 
                 System.out.println("nome = " + funcionarioAux.getNome());
                 System.out.println("data de nascimento = " + funcionarioAux.getData_de_nascimento());
@@ -114,6 +115,7 @@ public class FuncionarioDAO extends ConnectionDAO {
                 System.out.println("matricula = " + funcionarioAux.getMatricula());
                 System.out.println("email = " + funcionarioAux.getEmail());
                 System.out.println("telefone = " + funcionarioAux.getTelefone());
+                System.out.println("Departamento = " + funcionarioAux.getDepartamento_nome());
                 System.out.println("--------------------------------");
 
                 funcionarios.add(funcionarioAux);

@@ -15,13 +15,14 @@ public class ChefeDeDepartamentoDAO extends ConnectionDAO{
 
         connectToDB();
 
-        String sql = "INSERT INTO chefe_de_departamento (nome, matricula, email, telefone) values(?,?,?,?)";
+        String sql = "INSERT INTO chefe_de_departamento (nome, matricula, email, telefone, departamento_nome) values(?,?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, chefeDeDepartamento.getNome());
             pst.setInt(2, chefeDeDepartamento.getMatricula());
             pst.setString(3, chefeDeDepartamento.getEmail());
             pst.setString(4, chefeDeDepartamento.getTelefone());
+            pst.setString(5, chefeDeDepartamento.getDepartamentoNome());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -102,12 +103,13 @@ public class ChefeDeDepartamentoDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                ChefeDeDepartamento chefeDeDepartamentoAux = new ChefeDeDepartamento(rs.getString("nome"), rs.getInt("matricula"), rs.getString("email"), rs.getString("telefone"));
+                ChefeDeDepartamento chefeDeDepartamentoAux = new ChefeDeDepartamento(rs.getString("nome"), rs.getInt("matricula"), rs.getString("email"), rs.getString("telefone"),rs.getString("departamento_nome"));
 
                 System.out.println("nome = " + chefeDeDepartamentoAux.getNome());
                 System.out.println("matricula = " + chefeDeDepartamentoAux.getMatricula());
                 System.out.println("email = " + chefeDeDepartamentoAux.getEmail());
                 System.out.println("telefone = " + chefeDeDepartamentoAux.getTelefone());
+                System.out.println("departamento = " + chefeDeDepartamentoAux.getDepartamentoNome());
                 System.out.println("--------------------------------");
 
                 chefeDeDepartamentos.add(chefeDeDepartamentoAux);

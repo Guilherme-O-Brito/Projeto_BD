@@ -8,14 +8,16 @@ public class Funcionario {
     private int matricula;
     private String email;
     private String telefone;
+    private String departamento_nome;
 
-    public Funcionario(String nome, String data_de_nascimento,String cargo,int matricula,String email,String telefone){
+    public Funcionario(String nome, String data_de_nascimento,String cargo,int matricula,String email,String telefone, String departamento_nome){
         this.nome = nome;
         this.data_de_nascimento = data_de_nascimento;
         this.cargo = cargo;
         this.matricula = matricula;
         this.email = email;
         this.telefone = telefone;
+        this.departamento_nome = departamento_nome;
     }
 
     public String getNome(){
@@ -40,6 +42,9 @@ public class Funcionario {
 
     public String getTelefone() {
         return telefone;
+    }
+    public String getDepartamento_nome(){
+        return departamento_nome;
     }
 
 }

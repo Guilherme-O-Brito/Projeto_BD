@@ -15,13 +15,12 @@ public class EditoraDAO extends ConnectionDAO{
 
         connectToDB();
 
-        String sql = "INSERT INTO editora (nome, email, telefone, livro_id) values(?,?,?,?)";
+        String sql = "INSERT INTO editora (nome, email, telefone) values(?,?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, editora.getNome());
             pst.setString(2, editora.getEmail());
             pst.setString(3, editora.getTelefone());
-            pst.setInt(4, editora.getLivro_id());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -39,16 +38,14 @@ public class EditoraDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    public boolean updateEditoraNome(String nome, String email, String telefone, int livro_id, String novoNome) {
+    public boolean updateEditoraNome(String nome, String email, String telefone) {
         connectToDB();
-        String sql = "UPDATE editora SET nome=?, email=?, telefone=?, livro_id=? where nome=?";
+        String sql = "UPDATE editora SET email=?, telefone=? where nome=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, novoNome);
-            pst.setString(2, email);
-            pst.setString(3, telefone);
-            pst.setInt(4, livro_id);
-            pst.setString(5, nome);
+            pst.setString(1, email);
+            pst.setString(2, telefone);
+            pst.setString(3, nome);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -102,12 +99,11 @@ public class EditoraDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Editora editoraAux = new Editora(rs.getString("nome"), rs.getString("email"), rs.getString("telefone"), rs.getInt("livro_id"));
+                Editora editoraAux = new Editora(rs.getString("nome"), rs.getString("email"), rs.getString("telefone"));
 
                 System.out.println("nome = " + editoraAux.getNome());
                 System.out.println("email = " + editoraAux.getEmail());
                 System.out.println("telefone = " + editoraAux.getTelefone());
-                System.out.println("Livro_id = " + editoraAux.getLivro_id());
                 System.out.println("--------------------------------");
 
                 editoras.add(editoraAux);

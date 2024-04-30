@@ -15,15 +15,13 @@ public class DepartamentoDAO extends ConnectionDAO{
 
         connectToDB();
 
-        String sql = "INSERT INTO departamento (nome, area, email, telefone, funcionario_id, chefe_de_departamento_nome) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO departamento (nome, area, email, telefone) values(?,?,?,?)";
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, departamento.getNome());
             pst.setString(2, departamento.getArea());
             pst.setString(3, departamento.getEmail());
             pst.setString(4, departamento.getTelefone());
-            pst.setString(5, departamento.getFuncionario_id());
-            pst.setString(6, departamento.getChefe_de_departamento_nome());
             pst.execute();
             sucesso = true;
         } catch (SQLException exc) {
@@ -41,18 +39,15 @@ public class DepartamentoDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    public boolean updateDepartamentoNome(String nome, String area, String email, String telefone, String funcionario_id, String chefe_de_departamento_nome, String novoNome) {
+    public boolean updateDepartamentoNome(String nome, String area, String email, String telefone) {
         connectToDB();
-        String sql = "UPDATE departamento SET nome=?, area=?, email=?, telefone=?, funcionario_id=?, chefe_de_departamento_nome=? where nome=?";
+        String sql = "UPDATE departamento SET area=?, email=?, telefone=? where nome=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, novoNome);
-            pst.setString(2, area);
-            pst.setString(3, email);
-            pst.setString(4, telefone);
-            pst.setString(5, funcionario_id);
-            pst.setString(6, chefe_de_departamento_nome);
-            pst.setString(7, nome);
+            pst.setString(1, area);
+            pst.setString(2, email);
+            pst.setString(3, telefone);
+            pst.setString(4, nome);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -106,14 +101,12 @@ public class DepartamentoDAO extends ConnectionDAO{
 
             while (rs.next()) {
 
-                Departamento departamentoAux = new Departamento(rs.getString("nome"), rs.getString("area"),rs.getString("email"), rs.getString("telefone"), rs.getString("funcionario_id"),rs.getString("chefe_de_departamento_nome"));
+                Departamento departamentoAux = new Departamento(rs.getString("nome"), rs.getString("area"),rs.getString("email"), rs.getString("telefone"));
 
                 System.out.println("nome = " + departamentoAux.getNome());
                 System.out.println("area = " + departamentoAux.getArea());
                 System.out.println("email = " + departamentoAux.getEmail());
                 System.out.println("telefone = " + departamentoAux.getTelefone());
-                System.out.println("funcionario_id = " + departamentoAux.getFuncionario_id());
-                System.out.println("chefe de departamento = " + departamentoAux.getChefe_de_departamento_nome());
                 System.out.println("--------------------------------");
 
                 departamentos.add(departamentoAux);

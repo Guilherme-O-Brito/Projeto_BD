@@ -5,13 +5,11 @@ public class Editora {
     private String nome;
     private String email;
     private String telefone;
-    private int livro_id;
     
-    public Editora(String nome, String email, String telefone, int livro_id) {
+    public Editora(String nome, String email, String telefone) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-        this.livro_id = livro_id;
     }
 
     public String getNome() {
@@ -24,10 +22,6 @@ public class Editora {
 
     public String getTelefone() {
         return telefone;
-    }
-
-    public int getLivro_id() {
-        return livro_id;
     }
 
 }

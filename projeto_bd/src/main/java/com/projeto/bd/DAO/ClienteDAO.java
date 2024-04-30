@@ -40,17 +40,16 @@ public class ClienteDAO extends ConnectionDAO{
     }
 
     //UPDATE
-    public boolean updateClienteNome(String nome, String email, String telefone, String endereco, String data_de_nascimento, String novoNome) {
+    public boolean updateClienteNome(String nome, String email, String telefone, String endereco, String data_de_nascimento) {
         connectToDB();
-        String sql = "UPDATE cliente SET nome=?, email=?, telefone=?, endereco=?, data_de_nascimento=? where nome=?";
+        String sql = "UPDATE cliente SET email=?, telefone=?, endereco=?, data_de_nascimento=? where nome=?";
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, novoNome);
-            pst.setString(2, email);
-            pst.setString(3, telefone);
-            pst.setString(4, endereco);
-            pst.setString(5, data_de_nascimento);
-            pst.setString(6, nome);
+            pst.setString(1, email);
+            pst.setString(2, telefone);
+            pst.setString(3, endereco);
+            pst.setString(4, data_de_nascimento);
+            pst.setString(5, nome);
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -100,7 +99,7 @@ public class ClienteDAO extends ConnectionDAO{
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            System.out.println("Lista de Chefes De Departamento: ");
+            System.out.println("Lista de Clientes: ");
 
             while (rs.next()) {
 
